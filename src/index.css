@@ -1,0 +1,165 @@
+@import url("https://fonts.googleapis.com/css2?family=Inter:wght@100;200;300;400;500;600;800;900&display=swap");
+@import "..//src/shared/font/stylesheet.css";
+@import "tailwindcss";
+* {
+  font-family: "Inter", sans-serif;
+}
+h6 {
+  font-family: "Rotterburg Stylish FREE";
+}
+
+.active::after {
+  content: "";
+  position: absolute;
+  bottom: 0;
+  height: 2px;
+  width: 100%;
+  transition: 0.5s;
+  height: 4px; /* Border thickness */
+  background: rgb(255, 255, 255); /* Border color */
+  /* transform: translateX(-50%); */
+  border-radius: 2px; /* This makes the edges rounded */
+}
+
+.swiper {
+  width: 100%;
+  height: 100%;
+  background-color: #191919;
+}
+
+.swiper-slide {
+  background-color: #191919;
+  /* Center slide text vertically */
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+
+.swiper-slide img {
+  display: block;
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+}
+.custom-pagination .swiper-pagination-bullet {
+  width: 40px;
+  height: 3px;
+  background: rgba(255, 255, 255, 0.6);
+  border-radius: 50px;
+  transition: all 0.3s ease-in-out;
+}
+
+.custom-pagination .swiper-pagination-bullet-active {
+  width: 50px;
+  background: #fff;
+}
+
+.custom-pagination {
+  background-color: transparent !important;
+  position: absolute !important;
+  bottom: 100px !important;
+  left: 6% !important;
+  display: flex;
+  gap: 10px;
+  z-index: 777 !important;
+}
+
+.bgMain {
+  background-image: url("./shared/assets/img/ornament.png");
+  position: fixed;
+  top: 300px;
+  left: 50%;
+  /* right: -500px; */
+  /* left: 0; */
+  z-index: 10;
+  /* transform: scaleX(); */
+  background-repeat: no-repeat;
+  height: 100vh;
+  width: 100vw;
+}
+.ant-pagination-item {
+  background-color: #191919b9 !important;
+}
+.ant-pagination-item a {
+  color: #ffffff67 !important;
+}
+.ant-pagination-item-active a {
+  color: white !important;
+}
+.anticon {
+  color: #fff;
+}
+.ant-pagination-item-ellipsis{
+  color: #fff !important;
+}
+@media (max-width: 879px) {
+  .active::after {
+    content: "";
+    position: absolute;
+    left: -17px;
+
+    /* width: 100%; */
+    width: 4px;
+    transition: 0.5s;
+    /* transform: rotate(90deg); */
+    height: 100%;
+    background: rgb(255, 255, 255);
+    border-radius: 2px;
+  }
+  .bgMain {
+    top: 300px;
+    left: 20%;
+    /* right: -500px; */
+    /* left: 0; */
+    z-index: 10;
+    /* transform: scaleX(); */
+    background-repeat: no-repeat;
+    height: 100vh;
+    width: 100vw;
+  }
+}
+@media (max-width: 1404px) {
+  .custom-pagination {
+    background-color: transparent !important;
+    position: absolute !important;
+    bottom: 90px !important;
+    left: 6% !important;
+    display: flex;
+    gap: 10px;
+    z-index: 777 !important;
+  }
+}
+@media (max-width: 575px) {
+  .custom-pagination .swiper-pagination-bullet {
+    width: 30px;
+    height: 3px;
+    background: rgba(255, 255, 255, 0.6);
+    border-radius: 20px;
+    transition: all 0.3s ease-in-out;
+  }
+  .custom-pagination {
+    background-color: transparent !important;
+    position: absolute !important;
+    bottom: 90px !important;
+    left: 6% !important;
+    display: flex;
+    gap: 5px;
+    z-index: 777 !important;
+  }
+
+  .custom-pagination .swiper-pagination-bullet-active {
+    width: 35px;
+    background: #fff;
+  }
+}
+@media (max-width: 500px) {
+  .custom-pagination {
+    background-color: transparent !important;
+    position: absolute !important;
+    bottom: 50px !important;
+    left: 6% !important;
+    display: flex;
+    gap: 5px;
+    z-index: 777 !important;
+  }
+}
