@@ -25,7 +25,7 @@ const Books = ({ page = 14, grids = 7, pagina = true }) => {
   const endIndex = startIndex + booksPerPage;
   const paginatedBooks = data?.slice(startIndex, endIndex);
   return (
-    <div className="w-[95%] mx-auto max-w-[1440px] py-5">
+    <div className="w-[95%] mx-auto max-w-[1440px] py-5 z-50">
       <div
         className={` grid ${
           grids === 7 ? "grid-cols-7" : "grid-cols-4"

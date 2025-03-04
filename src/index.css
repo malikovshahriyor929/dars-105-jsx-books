@@ -92,6 +92,9 @@ h6 {
 .ant-pagination-item-ellipsis{
   color: #fff !important;
 }
+.ant-pagination{
+  background-color: transparent !important;
+}
 @media (max-width: 879px) {
   .active::after {
     content: "";

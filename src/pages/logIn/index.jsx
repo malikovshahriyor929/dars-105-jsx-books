@@ -55,22 +55,14 @@ const LogIn = () => {
                 placeholder="Password"
                 className="w-full border rounded-lg p-3 mb-4 focus:outline-none focus:ring-2 focus:ring-blue-400"
               />
-              {check ? (
+         
                 <button
-                  disabled
+                  disabled={check}
                   type="submit"
                   className="w-full cursor-not-allowed bg-black text-white rounded-lg py-3 hover:bg-gray-800"
                 >
                   Next step
                 </button>
-              ) : (
-                <button
-                  type="submit"
-                  className="w-full bg-black text-white rounded-lg py-3 hover:bg-gray-800"
-                >
-                  Next step
-                </button>
-              )}
             </form>
           </div>
         </div>

@@ -94,7 +94,7 @@ const BookDetails = (props) => {
           <p className="text-[25px]">Barchasini ko’rish</p>
         </div>
         <div className="flex flex-col">
-          <Books page={7} />
+          <Books page={7} grids={7} />
         </div>
       </div>
     </div>

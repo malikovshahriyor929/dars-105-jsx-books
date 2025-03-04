@@ -81,22 +81,13 @@ const SignUp = () => {
               placeholder="Password"
               className="w-full p-3 border border-gray-300 rounded-lg"
             />
-            {!check ? (
-              <button
-                type="submit"
-                className="w-full bg-[#111827] text-white p-3 rounded-lg"
-                disabled
-              >
-                Next step
-              </button>
-            ) : (
-              <button
-                type="submit"
-                className="w-full bg-[#111827] text-white p-3 rounded-lg"
-              >
-                Next step
-              </button>
-            )}
+            <button
+            
+              type="submit"
+              className="w-full bg-[#111827] text-white p-3 rounded-lg"
+            >
+              Next step
+            </button>
           </form>
         </div>
       </div>
