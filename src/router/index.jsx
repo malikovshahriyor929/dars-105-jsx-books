@@ -8,6 +8,7 @@ import Profile from "../pages/profile/profile";
 import Account from "../pages/profile/account";
 import SignUp from "../pages/signUp";
 import LogIn from "../pages/logIn";
+import Verify from "../pages/verify/verify";
 
 export const router = createBrowserRouter([
   {
@@ -51,5 +52,9 @@ export const router = createBrowserRouter([
   {
     path: "/logIn",
     element: <LogIn />,
+  },
+  {
+    path: "verify",
+    element: <Verify />,
   },
 ]);

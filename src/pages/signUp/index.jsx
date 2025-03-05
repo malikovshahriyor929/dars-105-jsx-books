@@ -1,32 +1,13 @@
-import React, { useState } from "react";
-
 import signUp from "../../shared/assets/svg/Two factor authentication-pana 1.svg";
-import { useForm } from "react-hook-form";
-import { Link, useNavigate } from "react-router-dom";
-import axios from "axios";
-import { toast } from "react-toastify";
+import { Link } from "react-router-dom";
+import { Form, Input } from "antd";
+import { signUpMutation } from "../../hooks/useQueryHandler/useMutation";
 
 const SignUp = () => {
-  let { reset, register, handleSubmit } = useForm();
-  let navigate = useNavigate();
-
+  let { mutate } = signUpMutation();
   let SignUpFn = (formValue) => {
-    axios
-      .post(`${import.meta.env.VITE_Security}/login`, {
-        ...formValue,
-        age: "",
-        country: "",
-        bio: "",
-      })
-      .then(() => {
-        toast.success("you  successfully signuped");
-        navigate("/");
-        setCheck(true);
-      })
-      .catch(() => {
-        toast.error("you don't successfully signuped please try later");
-        setCheck(true);
-      });
+    mutate(formValue);
+    localStorage.setItem("email", formValue.email);
   };
 
   return (
@@ -50,45 +31,69 @@ const SignUp = () => {
             </Link>
           </div>
 
-          <form onSubmit={handleSubmit(SignUpFn)} className="space-y-4">
-            <input
-              {...register("firstName")}
-              type="text"
-              placeholder="First name"
-              className="w-full p-3 border border-gray-300 rounded-lg"
-            />
-            <input
-              {...register("lastName")}
-              type="text"
-              placeholder="Last name"
-              className="w-full p-3 border border-gray-300 rounded-lg"
-            />
-            <input
+          <Form onFinish={SignUpFn} className="space-y-4">
+            <Form.Item
+              name="first_name"
+              rules={[
+                { required: true, message: "Please enter your first name!" },
+              ]}
+            >
+              <Input
+                type="text"
+                placeholder="First name"
+                className="w-full p-3 border border-gray-300 rounded-lg"
+              />
+            </Form.Item>
+
+            <Form.Item
+              name="last_name"
+              rules={[
+                { required: true, message: "Please enter your last name!" },
+              ]}
+            >
+              <Input
+                type="text"
+                placeholder="Last name"
+                className="w-full p-3 border border-gray-300 rounded-lg"
+              />
+            </Form.Item>
+            <Form.Item
+              name="email"
+              rules={[{ required: true, message: "Please enter your email!" }]}
+            >
+              <Input
+                type="email"
+                placeholder="Email"
+                className="w-full p-3 border border-gray-300 rounded-lg"
+              />
+            </Form.Item>
+            <Form.Item
+              name="password"
+              rules={[
+                { required: true, message: "Please enter your password!" },
+              ]}
+            >
+              <Input.Password
+                type="password"
+                placeholder="Password"
+                className="w-full p-3 border border-gray-300 rounded-lg"
+              />
+            </Form.Item>
+
+            {/* <input
               {...register("phone")}
               type="tel"
               placeholder="Phone"
               className="w-full p-3 border border-gray-300 rounded-lg"
-            />
-            <input
-              {...register("email")}
-              type="email"
-              placeholder="Email"
-              className="w-full p-3 border border-gray-300 rounded-lg"
-            />
-            <input
-              {...register("password")}
-              type="password"
-              placeholder="Password"
-              className="w-full p-3 border border-gray-300 rounded-lg"
-            />
+            /> */}
+
             <button
-            
               type="submit"
               className="w-full bg-[#111827] text-white p-3 rounded-lg"
             >
               Next step
             </button>
-          </form>
+          </Form>
         </div>
       </div>
     </div>

@@ -5,22 +5,28 @@ import { Link, useNavigate } from "react-router-dom";
 import { useForm } from "react-hook-form";
 import axios from "axios";
 import { toast } from "react-toastify";
+import { Form, Input } from "antd";
+import {
+  LoginMutation,
+  signUpMutation,
+} from "../../hooks/useQueryHandler/useMutation";
 
 const LogIn = () => {
   //   let [data, setData] = useState([]);
   let [check, setCheck] = useState(false);
 
-  let { reset, register, handleSubmit } = useForm();
-  let navigate = useNavigate();
-  let Login = async (formValue) => {
-    await axios.get(`${import.meta.env.VITE_Security}/login`).then((res) =>
-      res?.data?.filter((value) =>
-        value.email === formValue.email && value.password === formValue.password
-          ? // toast.success("you  successfully logined"),
-            (setCheck(true), navigate("/"))
-          : setCheck(false)
-      )
-    );
+  let { mutate } = LoginMutation();
+
+  let Login = (formValue) => {
+    mutate(formValue);
+    console.log(formValue);
+    // axios
+    //   .post(`${import.meta.env.VITE_SECURTY}/api/auth/sign-in`, {
+    //     data: formValue,
+    //   })
+    //   .then((res) => {
+    //     navigate("/");
+    //   });
   };
 
   return (
@@ -42,28 +48,40 @@ const LogIn = () => {
                 Sign up
               </Link>
             </p>
-            <form onSubmit={handleSubmit(Login)}>
-              <input
-                {...register("email")}
-                type="email"
-                placeholder="Email"
-                className="w-full border rounded-lg p-3 mb-4 focus:outline-none focus:ring-2 focus:ring-blue-400"
-              />
-              <input
-                {...register("password")}
-                type="password"
-                placeholder="Password"
-                className="w-full border rounded-lg p-3 mb-4 focus:outline-none focus:ring-2 focus:ring-blue-400"
-              />
-         
-                <button
-                  disabled={check}
-                  type="submit"
-                  className="w-full cursor-not-allowed bg-black text-white rounded-lg py-3 hover:bg-gray-800"
-                >
-                  Next step
-                </button>
-            </form>
+            <Form onFinish={Login}>
+              <Form.Item
+                name="email"
+                rules={[
+                  { required: true, message: "Please enter your email!" },
+                ]}
+              >
+                <Input
+                  type="email"
+                  placeholder="Email"
+                  className="w-full border rounded-lg p-3 mb-4 focus:outline-none focus:ring-2 focus:ring-blue-400"
+                />
+              </Form.Item>
+              <Form.Item
+                name="password"
+                rules={[
+                  { required: true, message: "Please enter your password!" },
+                ]}
+              >
+                <Input.Password
+                  type="password"
+                  placeholder="Password"
+                  className="w-full border rounded-lg p-3 mb-4 focus:outline-none focus:ring-2 focus:ring-blue-400"
+                />
+              </Form.Item>
+
+              <button
+                disabled={check}
+                type="submit"
+                className="w-full cursor-not-allowed bg-black text-white rounded-lg py-3 hover:bg-gray-800"
+              >
+                Next step
+              </button>
+            </Form>
           </div>
         </div>
       </div>
