@@ -13,8 +13,7 @@ import {
 const Header = () => {
   let [menuBar, setMenuBar] = useState(false);
   let navigate = useNavigate();
-
-  
+  let localImg = JSON.parse(localStorage?.getItem("userdata"))?.image || "";
 
   const items = [
     {
@@ -30,7 +29,7 @@ const Header = () => {
     },
   ];
   let navigateProfile = (e) => {
-    navigate(e.key);
+    navigate(e?.key);
   };
   return (
     <div className=" border-b bg-[#191919] border-[rgba(255,255,255,0.1)]">
@@ -88,7 +87,14 @@ const Header = () => {
             <button onClick={() => navigate("/logIn")}>
               <LogoutOutlined className="text-[25px]" />
             </button>
-            <img className="h-10 w-10" src={userImg} alt="" />
+            <img
+              className="h-10 w-10 object-cover rounded-full"
+              src={
+                !localImg
+                  ? "https://e7.pngegg.com/pngimages/753/432/png-clipart-user-profile-2018-in-sight-user-conference-expo-business-default-business-angle-service.png"
+                  : localImg
+              }
+            />
             <Dropdown
               menu={{
                 items,

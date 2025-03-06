@@ -42,7 +42,7 @@ export const verifyMutation = () => {
       navigate("/");
     },
     onError: (data) => {
-      notification.error({ message: data.message });
+      notification.error({ message: data?.message });
     },
   });
 };
@@ -58,17 +58,35 @@ export const LoginMutation = () => {
         method: "POST",
         body: data,
       }),
+      // console.log(data),
+      
     onSuccess: (res) => {
       const token = res?.data?.token;
       const userdata = res?.data;
-      notification.success({ message: res?.message });
+      notification.success({ message: res.message });
       localStorage.setItem("token", token);
       localStorage.setItem("userdata", JSON.stringify(userdata));
       navigate("/");
     },
 
     onError: (data) => {
-      notification.error({ message: data.message });
+      notification.error({ message: data?.message });
+      navigate("/login")
+      localStorage.clear()
     },
   });
 };
+
+
+
+
+
+
+
+
+
+
+
+
+
+

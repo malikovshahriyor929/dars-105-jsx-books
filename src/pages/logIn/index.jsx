@@ -10,23 +10,17 @@ import {
   LoginMutation,
   signUpMutation,
 } from "../../hooks/useQueryHandler/useMutation";
+import { LoadingOutlined } from "@ant-design/icons";
 
 const LogIn = () => {
   //   let [data, setData] = useState([]);
   let [check, setCheck] = useState(false);
 
-  let { mutate } = LoginMutation();
+  let { mutate, isPending } = LoginMutation();
 
   let Login = (formValue) => {
     mutate(formValue);
-    console.log(formValue);
-    // axios
-    //   .post(`${import.meta.env.VITE_SECURTY}/api/auth/sign-in`, {
-    //     data: formValue,
-    //   })
-    //   .then((res) => {
-    //     navigate("/");
-    //   });
+    // console.log(formValue);
   };
 
   return (
@@ -79,7 +73,7 @@ const LogIn = () => {
                 type="submit"
                 className="w-full cursor-not-allowed bg-black text-white rounded-lg py-3 hover:bg-gray-800"
               >
-                Next step
+                {isPending ? <LoadingOutlined /> : "Next step"}
               </button>
             </Form>
           </div>

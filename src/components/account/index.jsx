@@ -1,10 +1,9 @@
-import React, { useEffect, useState } from "react";
-import { Button, Input, Switch, Tabs } from "antd";
+import React, { useState } from "react";
+import { Button, Form, Input, Switch, Tabs } from "antd";
 import { ArrowLeftOutlined, CameraOutlined } from "@ant-design/icons";
-import { NavLink, useNavigate } from "react-router-dom";
+import { useNavigate } from "react-router-dom";
 import { useForm } from "react-hook-form";
 import { useQueryHandler } from "../../hooks/useQueryHandler";
-import axios from "axios";
 
 const AcoountComponents = () => {
   const [activeKey, setActiveKey] = useState("1");
@@ -12,15 +11,12 @@ const AcoountComponents = () => {
   const [enabled, setEnabled] = useState(true);
   let navigate = useNavigate();
 
-  let { reset, register, handleSubmit } = useForm();
 
   let Submit = (formValue) => {
     console.log(formValue);
+    // mutate
   };
-
-  useEffect(() => {
-    // axios.get("https://678944a52c874e66b7d8381f.mockapi.io/login")
-  }, []);
+  let localData = JSON.parse(localStorage.getItem("userdata"));
 
   const items = [
     {
@@ -62,8 +58,14 @@ const AcoountComponents = () => {
                 </div>
               </div>
 
-              <form
-                onSubmit={handleSubmit(Submit)}
+              <Form
+                onFinish={Submit}
+                initialValues={{
+                  first_name:localData?.first_name,
+                  last_name:localData?.last_name,
+                  email:localData?.email,
+                  address:localData?.address,
+                }}
                 className="w-3/4 max-[726px]:w-full px-6 max-[320px]:px-0"
               >
                 <h2 className="text-2xl font-semibold mb-4">My Profile</h2>
@@ -72,11 +74,20 @@ const AcoountComponents = () => {
                     <label className="block text-gray-600 mb-1">
                       First Name
                     </label>
-                    <input
-                      {...register("firstName")}
-                      placeholder="John"
-                      className="bg-[#f3f6f9] px-3 py-2 rounded-lg w-full"
-                    />
+                    <Form.Item
+                      name="first_name"
+                      rules={[
+                        {
+                          required: true,
+                          message: "Please enter your first_name!",
+                        },
+                      ]}
+                    >
+                      <Input
+                        placeholder="John"
+                        className="!bg-[#f3f6f9] !px-3 !py-2 !rounded-lg !w-full"
+                      />
+                    </Form.Item>
                     <label className="text-[12px] text-[#b5b5c3] opacity-80 ">
                       Please enter your first name.
                     </label>
@@ -85,11 +96,21 @@ const AcoountComponents = () => {
                     <label className="block text-gray-600 mb-1">
                       Last Name
                     </label>
-                    <input
-                      {...register("lastName")}
-                      placeholder="Wick"
-                      className="bg-[#f3f6f9] px-3 py-2 rounded-lg w-full"
-                    />
+
+                    <Form.Item
+                      name="last_name"
+                      rules={[
+                        {
+                          required: true,
+                          message: "Please enter your last_name!",
+                        },
+                      ]}
+                    >
+                      <Input
+                        placeholder="Wick"
+                        className="!bg-[#f3f6f9] !px-3 !py-2 !rounded-lg !w-full"
+                      />
+                    </Form.Item>
                     <label className="text-[12px] text-[#b5b5c3] opacity-80 ">
                       Please enter your last name.
                     </label>
@@ -97,22 +118,42 @@ const AcoountComponents = () => {
                   <div className="flex items-center max-[500px]:flex-col gap-6">
                     <div className="flex flex-col w-full">
                       <label className="block text-gray-600 mb-1">Phone</label>
-                      <input
-                        {...register("phone")}
-                        placeholder="+61412345678"
-                        className="bg-[#f3f6f9] px-3 py-2 rounded-lg w-full"
-                      />
+
+                      <Form.Item
+                        name="address"
+                        rules={[
+                          {
+                            required: true,
+                            message: "Please enter your address!",
+                          },
+                        ]}
+                      >
+                        <Input
+                          placeholder="tashkent"
+                          className="!bg-[#f3f6f9] !px-3 !py-2 !rounded-lg !w-full"
+                        />
+                      </Form.Item>
                       <label className="text-[12px] text-[#b5b5c3] opacity-80 ">
-                        Please enter your phone number.
+                        Please enter your address.
                       </label>
                     </div>
                     <div className="flex flex-col w-full">
                       <label className="block text-gray-600 mb-1">Email</label>
-                      <input
-                        {...register("email")}
-                        placeholder="john.wick@reeves.com"
-                        className="bg-[#f3f6f9] px-3 py-2 rounded-lg w-full"
-                      />
+
+                      <Form.Item
+                        name="email"
+                        rules={[
+                          {
+                            required: true,
+                            message: "Please enter your email!",
+                          },
+                        ]}
+                      >
+                        <Input
+                          placeholder="john.wick@reeves.com"
+                          className="!bg-[#f3f6f9] !px-3 !py-2 !rounded-lg !w-full"
+                        />
+                      </Form.Item>
                       <label className="text-[12px] text-[#b5b5c3] opacity-80 ">
                         Please enter your email address.
                       </label>
@@ -129,7 +170,7 @@ const AcoountComponents = () => {
                     Save Changes
                   </Button>
                 </div>
-              </form>
+              </Form>
             </div>
           </div>
         </>
@@ -290,7 +331,10 @@ const AcoountComponents = () => {
   return (
     <>
       <div className="relative   mx-auto max-w-[1440px]  ">
-        <button className="absolute top-24 left-7 z-10  *:!text-black" onClick={()=>navigate("/")}>
+        <button
+          className="absolute top-24 left-7 z-10  *:!text-black"
+          onClick={() => navigate("/")}
+        >
           <ArrowLeftOutlined />
         </button>
         <Tabs
