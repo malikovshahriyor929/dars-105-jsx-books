@@ -14,11 +14,11 @@ export const signUpMutation = () => {
         method: "POST",
         body: data,
       }),
-    // onSuccess: (data) => {
-    //   console.log(data);
-    //   navigate("/verify");
-    //   notification.success({ message: "you almost resigtered" });
-    // },
+    onSuccess: (data) => {
+      // console.log(data);
+      // navigate("/verify");
+      notification.success({ message: "you can't sign up please try later" });
+    },
     onError: (data) => {
       navigate("/signUp");
       notification.error({ message: data.message });
