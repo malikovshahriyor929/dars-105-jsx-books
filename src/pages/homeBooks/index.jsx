@@ -6,12 +6,12 @@ import Books from "../../components/books";
 
 const HomeBooks = () => {
   return (
-    <div className="h-full relative  bg-[#191919]">
-      <div className="bgMain"></div>
+    <div className="h-full relative *:z-40  bg-[#191919]">
+      {/* <div className="bgMain !z-0"></div> */}
       <Showcase />
       <SearchComponents />
       <CategoryUnderSearch />
-      <Books />
+        <Books />
     </div>
   );
 };

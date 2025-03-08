@@ -13,7 +13,7 @@ const AboutBook = () => {
 
   return (
     <div className="relative h-full !z-50 bg-[#191919] ">
-      <div className="bgMain !z-0"></div>
+      {/* <div className="bgMain !z-0"></div> */}
 
       {isLoading ? (
         <Skeleton />
