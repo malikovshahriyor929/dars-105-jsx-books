@@ -14,12 +14,13 @@ export const signUpMutation = () => {
         method: "POST",
         body: data,
       }),
-    onSuccess: (data) => {
-      console.log(data);
-      navigate("/verify");
-      notification.success({ message: "you almost resigtered" });
-    },
+    // onSuccess: (data) => {
+    //   console.log(data);
+    //   navigate("/verify");
+    //   notification.success({ message: "you almost resigtered" });
+    // },
     onError: (data) => {
+      navigate("/signUp");
       notification.error({ message: data.message });
     },
   });
@@ -58,8 +59,8 @@ export const LoginMutation = () => {
         method: "POST",
         body: data,
       }),
-      // console.log(data),
-      
+    // console.log(data),
+
     onSuccess: (res) => {
       const token = res?.data?.token;
       const userdata = res?.data;
@@ -71,22 +72,27 @@ export const LoginMutation = () => {
 
     onError: (data) => {
       notification.error({ message: data?.message });
-      navigate("/login")
-      localStorage.clear()
+      navigate("/login");
+      localStorage.clear();
     },
   });
 };
 
-
-
-
-
-
-
-
-
-
-
-
-
-
+export const EditMutation = () => {
+  let navigate = useNavigate();
+  let myAxios = useAxiosLogin();
+  return useMutation({
+    mutationKey: "edit",
+    mutationFn: (data) =>
+      myAxios({
+        url: "api/auth/edit",
+        method: "POST",
+        body: data,
+      }),
+    onSuccess: (res) => {
+      const userdata = res?.data;
+      localStorage.setItem("userdata", JSON.stringify(userdata));
+      notification.success({ message: res.message });
+    },
+  });
+};

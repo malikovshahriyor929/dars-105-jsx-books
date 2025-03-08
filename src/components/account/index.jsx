@@ -4,17 +4,40 @@ import { ArrowLeftOutlined, CameraOutlined } from "@ant-design/icons";
 import { useNavigate } from "react-router-dom";
 import { useForm } from "react-hook-form";
 import { useQueryHandler } from "../../hooks/useQueryHandler";
+import { EditMutation } from "../../hooks/useQueryHandler/useMutation";
 
 const AcoountComponents = () => {
   const [activeKey, setActiveKey] = useState("1");
   let [check, setCheck] = useState(false);
   const [enabled, setEnabled] = useState(true);
   let navigate = useNavigate();
-
+  let { mutate, isPending } = EditMutation();
 
   let Submit = (formValue) => {
     console.log(formValue);
-    // mutate
+    mutate(formValue);
+  };
+  let ChangeImaga = () => {
+    let token = localStorage.getItem("token");
+    const formData = new FormData();
+    formData.append("image", file);
+
+    axios({
+      url: `${import.meta.env.VITE_BASE_URL}/api/auth/edit-image`,
+      data: formData,
+      method: "POST",
+      headers: {
+        "Content-Type": "multipart/form-data",
+        Authorization: `Bearer ${token}`,
+      },
+    }).then((res) => {
+      setImage(res.data.data.image),
+        localStorage.setItem("image", res.data.data.image);
+    });
+  };
+
+  let ChangePassword = (formValue) => {
+    console.log(formValue);
   };
   let localData = JSON.parse(localStorage.getItem("userdata"));
 
@@ -47,24 +70,27 @@ const AcoountComponents = () => {
             <div className="bg-white p-8 max-[851px]:mx-0 max-[850px]:p-5 max-[726px]:mt-0 mx-10 mt-10 h-full w-full flex max-[726px]:flex-col ">
               <div className="w-1/4 max-[726px]:w-full flex flex-col items-center">
                 <div className="relative">
+                  <label htmlFor="image">
                   <img
-                    src="https://s3-alpha-sig.figma.com/img/cd50/92f3/31b6a258d24333f5bd374d28d64f9a0a?Expires=1741564800&Key-Pair-Id=APKAQ4GOSFWCW27IBOMQ&Signature=jvjdw5aOmu-tFKFp-cpHB6Keswac-rGTDido91tfXvuCeHHAf4ZvP64GiL2yrIzzbIvK2wRZl66CRREm31-VdXv~IHTn2UvSOkQW0GBkYDchcU-cITDrCxkl6u8FgXLF40FXF8QAwEZaa9aCIIGFQxixWFpR0F9FLemkzTGk5KBzu6t198OQYsQbf5goq9yqDMf4b6a4FM7ye4h5y9eSBiPdm3rIAd9nE9Ni4mIuuPDYFgWStX7NoF0QSYIgTy1NzRsKb9GQW7FZCvxikOfJev4SjSbQ9Cotv6VKGuFc~ofNqEDZrgcj6-5OSiZw~iY06E2lz0UQN1OsoaerLkAzyg__"
+                    src={localData.image}
                     alt="Profile"
-                    className="w-44 h-44 rounded-full object-cover "
+                    className="w-44 h-44 border-[0.1px] rounded-full object-cover "
                   />
-                  <button className="absolute bottom-0 right-0 bg-gray-200 p-1 px-2 rounded-full shadow-md">
-                    <CameraOutlined className="text-lg" />
-                  </button>
+                  </label>
+                  <input className="hidden"  type="file" id="image" />
+                    <button id="image" className="absolute bottom-0 right-0 bg-gray-200 p-1 px-2 rounded-full shadow-md">
+                      <CameraOutlined className="text-lg" />
+                    </button>
                 </div>
               </div>
 
               <Form
                 onFinish={Submit}
                 initialValues={{
-                  first_name:localData?.first_name,
-                  last_name:localData?.last_name,
-                  email:localData?.email,
-                  address:localData?.address,
+                  first_name: localData?.first_name,
+                  last_name: localData?.last_name,
+                  email: localData?.email,
+                  address: localData?.address,
                 }}
                 className="w-3/4 max-[726px]:w-full px-6 max-[320px]:px-0"
               >
@@ -199,59 +225,78 @@ const AcoountComponents = () => {
         </div>
       ),
       children: (
-        <div>
-          <from className="bg-white p-8 mx-10 max-[400px]:mx-0 rounded-lg  ">
+        <div className="w-[90%] max-w-[1440px] !h-full flex  !items-center justify-center !m-auto">
+          <Form
+            onFinish={ChangePassword}
+            className="!bg-white !p-8 !mx-10  !h-full !mt-10 !my-auto  rounded-lg  "
+          >
             <h2 className="text-2xl font-semibold mb-4 text-gray-800">
               Change Or Recover Your Password
             </h2>
             <div className="space-y-4">
               <div>
-                <label className="block text-gray-600 mb-1">Email</label>
-                <input
-                  type="email"
-                  className="bg-[#f3f6f9] px-3 py-2 rounded-lg w-full "
-                  placeholder="admin@mail.ru"
-                />
-              </div>
-              <div>
-                <label className="block text-gray-600 mb-1">
-                  Current Password
-                </label>
-                <input
-                  type="password"
-                  className="bg-[#f3f6f9] px-3 py-2 rounded-lg w-full "
-                  placeholder="********"
-                />
-              </div>
-              <div className="grid grid-cols-1 sm:grid-cols-2 gap-4">
-                <div>
-                  <label className="block text-gray-600 mb-1">
-                    New Password
-                  </label>
-                  <input
-                    type="password"
-                    className="bg-[#f3f6f9] px-3 py-2 rounded-lg w-full "
+                <p className="block text-gray-600 mb-1">Current Password</p>
+                <Form.Item
+                  name="current_password"
+                  rules={[
+                    {
+                      required: true,
+                      message: "Please enter your current_password!",
+                    },
+                  ]}
+                >
+                  <Input.Password
+                    className="!bg-[#f3f6f9] !px-3 !py-2 !rounded-lg !w-full "
                     placeholder="********"
                   />
+                </Form.Item>
+              </div>
+              <div className="grid grid-cols-1 w-full sm:grid-cols-2 gap-4">
+                <div>
+                  <p className="block text-gray-600 mb-1">New Password</p>
+                  <Form.Item
+                    name="new_password"
+                    rules={[
+                      {
+                        required: true,
+                        message: "Please enter your new_password!",
+                      },
+                    ]}
+                  >
+                    <Input.Password
+                      className="!bg-[#f3f6f9] !px-3 !py-2 !rounded-lg !w-full "
+                      placeholder="********"
+                    />
+                  </Form.Item>
                 </div>
                 <div>
-                  <label className="block text-gray-600 mb-1">
-                    Confirm Password
-                  </label>
-                  <input
-                    type="password"
-                    className="bg-[#f3f6f9] px-3 py-2 rounded-lg w-full "
-                    placeholder="********"
-                  />
+                  <p className="block text-gray-600 mb-1">Confirm Password</p>
+                  <Form.Item
+                    name="confirm_password"
+                    rules={[
+                      {
+                        required: true,
+                        message: "Please enter your confirm_password!",
+                      },
+                    ]}
+                  >
+                    <Input.Password
+                      className="!bg-[#f3f6f9] !px-3 !py-2 !rounded-lg !w-full "
+                      placeholder="********"
+                    />
+                  </Form.Item>
                 </div>
               </div>
             </div>
             <div className="flex justify-end mt-6">
-              <Button className="!bg-[#152540] !text-white px-6 py-2 rounded-lg">
+              <Button
+                htmlType="submit"
+                className="!bg-[#152540] !text-white px-6 py-2 rounded-lg"
+              >
                 Save Changes
               </Button>
             </div>
-          </from>
+          </Form>
         </div>
       ),
     },
