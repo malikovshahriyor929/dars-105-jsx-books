@@ -3,7 +3,7 @@ import { Link, NavLink, useNavigate } from "react-router-dom";
 
 import { Dropdown, Space } from "antd";
 
-import userImg from "../../shared/assets/svg/Mask Group (4).svg";
+// import userImg from "../../shared/assets/svg/Mask Group (4).svg";
 import {
   CloseOutlined,
   DownOutlined,
@@ -20,13 +20,13 @@ const Header = () => {
       key: "/account",
       label: "My Account",
     },
-    {
-      type: "divider",
-    },
-    {
-      key: "/profile",
-      label: "Profile",
-    },
+    // {
+    //   type: "divider",
+    // },
+    // {
+    //   // key: "/profile",
+    //   // label: "Profile",
+    // },
   ];
   let navigateProfile = (e) => {
     navigate(e?.key);
