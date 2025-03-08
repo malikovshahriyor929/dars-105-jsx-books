@@ -31,8 +31,8 @@ const AcoountComponents = () => {
         Authorization: `Bearer ${token}`,
       },
     }).then((res) => {
-      setImage(res.data.data.image),
-        localStorage.setItem("image", res.data.data.image);
+      setImage(res.data?.data?.image),
+        localStorage.setItem("image", res.data?.data?.image);
     });
   };
 
@@ -71,16 +71,23 @@ const AcoountComponents = () => {
               <div className="w-1/4 max-[726px]:w-full flex flex-col items-center">
                 <div className="relative">
                   <label htmlFor="image">
-                  <img
-                    src={localData.image}
-                    alt="Profile"
-                    className="w-44 h-44 border-[0.1px] rounded-full object-cover "
-                  />
+                    <img
+                      src={
+                        !localData?.image
+                          ? "https://e7.pngegg.com/pngimages/753/432/png-clipart-user-profile-2018-in-sight-user-conference-expo-business-default-business-angle-service.png"
+                          : localData?.image
+                      }
+                      alt="Profile"
+                      className="w-44 h-44 border-[0.1px] rounded-full object-cover "
+                    />
                   </label>
-                  <input className="hidden"  type="file" id="image" />
-                    <button id="image" className="absolute bottom-0 right-0 bg-gray-200 p-1 px-2 rounded-full shadow-md">
-                      <CameraOutlined className="text-lg" />
-                    </button>
+                  <input className="hidden" type="file" id="image" />
+                  <button
+                    id="image"
+                    className="absolute bottom-0 right-0 bg-gray-200 p-1 px-2 rounded-full shadow-md"
+                  >
+                    <CameraOutlined className="text-lg" />
+                  </button>
                 </div>
               </div>
 
