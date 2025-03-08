@@ -17,7 +17,7 @@ export const signUpMutation = () => {
     onSuccess: (data) => {
       // console.log(data);
       // navigate("/verify");
-      notification.success({ message: "you can't sign up please try later" });
+      notification.error({ message: "you can't sign up please try later" });
     },
     onError: (data) => {
       navigate("/signUp");
